@@ -6,6 +6,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/antonov-denis/denisurl/internal/limiter"
 	"github.com/antonov-denis/denisurl/internal/store"
 	"github.com/antonov-denis/denisurl/internal/web"
 )
@@ -18,7 +19,10 @@ func run() error {
 	}
 	defer myStore.Close()
 
-	myServer := web.New(os.Getenv("BASE_URL"), myStore)
+	myLimiter := limiter.New()
+	defer myLimiter.Stop()
+
+	myServer := web.New(os.Getenv("BASE_URL"), myStore, myLimiter)
 
 	server := http.Server{
 		Addr:         ":8000",
