@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"log/slog"
 	"net/http"
 	"os"
@@ -18,6 +19,11 @@ func run() error {
 		return err
 	}
 	defer myStore.Close()
+
+	if err := myStore.Migrate(context.Background()); err != nil {
+		slog.Error("migrations failed", "err", err)
+		return err
+	}
 
 	myLimiter := limiter.New()
 	defer myLimiter.Stop()
