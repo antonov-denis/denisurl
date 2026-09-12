@@ -1,0 +1,174 @@
+# One-time setup on the server, before applying this:
+#
+#   sudo kubectl create secret generic denisurl-db \
+#     --from-literal=POSTGRES_PASSWORD='<pick one>' \
+#     --from-literal=DATABASE_URL='postgres://denisurl:<same one>@denisurl-db:5432/denisurl'
+#
+# The schema is applied by the app itself on startup, from the SQL embedded in
+# internal/store/migrations. There is nothing to run by hand.
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: denisurl-db
+  namespace: default
+spec:
+  accessModes: ["ReadWriteOnce"]
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: denisurl-db
+  namespace: default
+spec:
+  replicas: 1
+  strategy:
+    # The volume is ReadWriteOnce, so the old pod must release it before the
+    # new one can start. A rolling update would deadlock.
+    type: Recreate
+  selector:
+    matchLabels:
+      app: denisurl-db
+  template:
+    metadata:
+      labels:
+        app: denisurl-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:17
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: denisurl
+            - name: POSTGRES_DB
+              value: denisurl
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: denisurl-db
+                  key: POSTGRES_PASSWORD
+            # A subdirectory, not the mount root: the volume root can contain
+            # entries Postgres refuses to initialise into.
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+          readinessProbe:
+            exec:
+              command: ["pg_isready", "-U", "denisurl"]
+            periodSeconds: 10
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "50m"
+            limits:
+              memory: "256Mi"
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: denisurl-db
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: denisurl-db
+  namespace: default
+spec:
+  selector:
+    app: denisurl-db
+  ports:
+    - port: 5432
+      targetPort: 5432
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: denisurl
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: denisurl
+  template:
+    metadata:
+      labels:
+        app: denisurl
+    spec:
+      imagePullSecrets:
+        - name: ghcr-secret
+      containers:
+        - name: denisurl
+          image: ghcr.io/antonov-denis/denisurl:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: BASE_URL
+              value: "https://go301.link"
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: denisurl-db
+                  key: DATABASE_URL
+            - name: GOMEMLIMIT
+              value: "100MiB"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            periodSeconds: 5
+          resources:
+            requests:
+              memory: "32Mi"
+              cpu: "10m"
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: denisurl
+  namespace: default
+spec:
+  selector:
+    app: denisurl
+  ports:
+    - port: 80
+      targetPort: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: denisurl
+  namespace: default
+  annotations:
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt
+spec:
+  tls:
+    - hosts:
+        - go301.link
+  rules:
+    - host: go301.link
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: denisurl
+                port:
+                  number: 80
