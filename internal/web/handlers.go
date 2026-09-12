@@ -14,8 +14,12 @@ func (s *Server) handleHealth(w http.ResponseWriter, _ *http.Request) {
 	w.Write([]byte("Ok!"))
 }
 
+type indexView struct {
+	BaseURL string
+}
+
 func (s *Server) handleIndex(w http.ResponseWriter, _ *http.Request) {
-	s.render(w, http.StatusOK, "index.html", nil)
+	s.render(w, http.StatusOK, "index.html", indexView{BaseURL: s.baseURL})
 }
 
 func (s *Server) handleRedirect(w http.ResponseWriter, r *http.Request) {

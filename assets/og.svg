@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#fbf7ff"/>
+
+  <!-- left block, as on the site -->
+  <rect x="0" y="0" width="430" height="630" fill="#9b6bd3"/>
+  <rect x="428" y="0" width="4" height="630" fill="#1c1725"/>
+
+  <!-- outlined 301 mark -->
+  <text x="74" y="352"
+        font-family="Cantarell Extra Bold, Liberation Sans, sans-serif"
+        font-size="168" font-weight="800" letter-spacing="-8"
+        fill="none" stroke="#ffffff" stroke-width="4">301</text>
+  <text x="76" y="404"
+        font-family="Liberation Mono, monospace"
+        font-size="21" font-weight="700" letter-spacing="7"
+        fill="#ffffff">GO301.LINK</text>
+
+  <!-- right: the statement -->
+  <text x="502" y="286"
+        font-family="Cantarell Extra Bold, Liberation Sans, sans-serif"
+        font-size="76" font-weight="800" letter-spacing="-2"
+        fill="#1c1725">MOVED</text>
+  <text x="502" y="368"
+        font-family="Cantarell Extra Bold, Liberation Sans, sans-serif"
+        font-size="76" font-weight="800" letter-spacing="-2"
+        fill="#1c1725">PERMANENTLY.</text>
+  <rect x="502" y="382" width="578" height="6" fill="#9b6bd3"/>
+
+
+  <!-- frame -->
+  <rect x="2" y="2" width="1196" height="626" fill="none" stroke="#1c1725" stroke-width="4"/>
+</svg>
