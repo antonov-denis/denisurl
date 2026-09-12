@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>go301.link - moved permanently</title>
+	<meta name="description" content="Paste a long URL, get a short one. A 301 and nothing else.">
+	<link rel="stylesheet" href="/static/style.css">
+	<script>
+		// Applied before paint so there is no light-mode flash on load.
+		try {
+			const stored = localStorage.getItem("go301-theme");
+			const preferred = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+			document.documentElement.dataset.theme = stored || preferred;
+		} catch (e) {
+			document.documentElement.dataset.theme = "light";
+		}
+	</script>
+</head>
+<body>
+	<button class="theme-toggle" type="button" id="theme-toggle" aria-label="Toggle colour theme">
+		<span class="theme-icons" aria-hidden="true">
+			<svg class="icon icon-sun" viewBox="0 0 24 24">
+				<circle cx="12" cy="12" r="4"/>
+				<path d="M12 2v2.5M12 19.5V22M4.93 4.93 6.7 6.7M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07 6.7 17.3M17.3 6.7l1.77-1.77"/>
+			</svg>
+			<svg class="icon icon-moon" viewBox="0 0 24 24">
+				<path d="M20.2 14.8A8.2 8.2 0 0 1 9.2 3.8 8.7 8.7 0 1 0 20.2 14.8Z"/>
+			</svg>
+		</span>
+	</button>
+
+	<div class="split">
+		<section class="pane-ident">
+			<div class="mark">
+				<span class="mark-code" aria-hidden="true">301</span>
+				<a class="mark-host" href="/">go301.link</a>
+			</div>
+
+			<h1>Moved <span class="rule-word">permanently</span>.</h1>
+
+			<ol class="spec">
+				<li><b>01</b> No accounts, no cookies</li>
+				<li><b>02</b> No interstitial, straight through</li>
+				<li><b>03</b> Go and Postgres</li>
+			</ol>
+		</section>
+
+		<main class="pane-work">
+			<p class="work-label">New link</p>
+
+			<form class="shorten" id="shorten">
+				<label class="field-label" for="target">Destination URL</label>
+				<div class="field-stack">
+					<input type="text"
+					       id="target"
+					       name="target"
+					       placeholder="denisantonov.com"
+					       autocomplete="off"
+					       spellcheck="false"
+					       required>
+					<button class="btn btn-primary" type="submit">Shorten it</button>
+				</div>
+			</form>
+
+			<div id="result" aria-live="polite"></div>
+
+			<p class="colophon">Powered by <a href="https://denisantonov.com" target="_blank" rel="noopener">denisantonov.com</a></p>
+		</main>
+	</div>
+
+	<script src="/static/app.js" defer></script>
+	<script>
+		document.getElementById("theme-toggle").addEventListener("click", () => {
+			const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+			document.documentElement.dataset.theme = next;
+			try {
+				localStorage.setItem("go301-theme", next);
+			} catch (e) {
+				// Private mode: the toggle still works for this page view.
+			}
+		});
+	</script>
+</body>
+</html>

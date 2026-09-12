@@ -6,14 +6,16 @@ import (
 	"errors"
 	"log/slog"
 	"net/http"
-	"net/url"
-	"strings"
 
 	"github.com/antonov-denis/denisurl/internal/store"
 )
 
 func (s *Server) handleHealth(w http.ResponseWriter, _ *http.Request) {
 	w.Write([]byte("Ok!"))
+}
+
+func (s *Server) handleIndex(w http.ResponseWriter, _ *http.Request) {
+	s.render(w, http.StatusOK, "index.html", nil)
 }
 
 func (s *Server) handleRedirect(w http.ResponseWriter, r *http.Request) {
@@ -52,21 +54,14 @@ func (s *Server) handleCreate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	raw := strings.TrimSpace(parsedBody.TargetURL)
-	if !strings.Contains(raw, "://") {
-      raw = "https://" + raw
-	}
-
-	targetURL, err := url.Parse(raw)
-	if err != nil || (targetURL.Scheme != "http" && targetURL.Scheme != "https") || targetURL.Host == "" {
+	target, err := normalizeURL(parsedBody.TargetURL)
+	if err != nil {
 		http.Error(w, "target must be a http or https URL", http.StatusBadRequest)
 		return
 	}
 
 	code := rand.Text()[:7]
-
-	err = s.store.CreateTarget(r.Context(), code, targetURL.String())
-	if err != nil {
+	if err := s.store.CreateTarget(r.Context(), code, target); err != nil {
 		http.Error(w, "Something Went Wrong", http.StatusInternalServerError)
 		return
 	}
