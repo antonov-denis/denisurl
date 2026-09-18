@@ -6,14 +6,10 @@
      role="img"
      aria-labelledby="title desc">
   <title id="title">go301.link</title>
-  <desc id="desc">A sharp-edged purple chevron inside a rounded square outline.</desc>
-  <rect x="8" y="8"
-        width="184"
-        height="184"
-        rx="40"
-        fill="#f1f1f1"
-        stroke="#f1f1f1"
-        stroke-width="12"/>
-  <path d="M75 55 L93 55 L125 100 L93 145 L75 145 L107 100 Z"
-        fill="#9D7BD8"/>
+  <desc id="desc">A purple chevron in a hard-bordered square with an offset shadow.</desc>
+  <!-- Offset shadow, square edges, 12px ink border: the same three moves the
+       whole site is built from. -->
+  <rect x="34" y="34" width="150" height="150" fill="#1c1725"/>
+  <rect x="16" y="16" width="150" height="150" fill="#fbf7ff" stroke="#1c1725" stroke-width="12"/>
+  <path d="M68 52 L92 52 L128 91 L92 130 L68 130 L104 91 Z" fill="#9b6bd3"/>
 </svg>

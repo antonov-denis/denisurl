@@ -40,6 +40,7 @@ function showResult(shortURL, target) {
 		try {
 			await navigator.clipboard.writeText(shortURL);
 			copy.textContent = "Copied";
+			setTimeout(() => (copy.textContent = "Copy"), 1600);
 		} catch (err) {
 			// navigator.clipboard needs a secure context (https or localhost).
 			copy.textContent = "Press ⌘C";
@@ -48,7 +49,7 @@ function showResult(shortURL, target) {
 	});
 
 	const head = el("div", "result-head");
-	head.append(el("span", "result-label", "Your short link"), copy);
+	head.append(el("span", "result-label", "Short link"), copy);
 
 	const body = el("div", "result-body");
 	body.append(link, el("p", "target", "→ " + target));

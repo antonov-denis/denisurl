@@ -3,25 +3,27 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>go301.link - moved permanently</title>
-	<meta name="description" content="Paste a long URL, get a short one. A 301 and nothing else.">
+	<title>go301.link — moved permanently</title>
+	<meta name="description" content="Paste a long URL. Get a short one. A 301 and nothing else.">
 	<link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+	<link rel="preload" href="/static/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+	<link rel="preload" href="/static/fonts/geist-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 	<link rel="stylesheet" href="/static/style.css">
 	<meta name="theme-color" content="#9b6bd3">
 
 	<meta property="og:type" content="website">
 	<meta property="og:site_name" content="go301.link">
-	<meta property="og:title" content="go301.link - moved permanently">
-	<meta property="og:description" content="Paste a long URL, get a short one. A 301 and nothing else.">
+	<meta property="og:title" content="go301.link — moved permanently">
+	<meta property="og:description" content="Paste a long URL. Get a short one. A 301 and nothing else.">
 	<meta property="og:url" content="{{.BaseURL}}/">
 	<meta property="og:image" content="{{.BaseURL}}/static/og.png">
 	<meta property="og:image:width" content="1200">
 	<meta property="og:image:height" content="630">
-	<meta property="og:image:alt" content="go301.link - moved permanently">
+	<meta property="og:image:alt" content="go301.link — moved permanently">
 
 	<meta name="twitter:card" content="summary_large_image">
-	<meta name="twitter:title" content="go301.link - moved permanently">
-	<meta name="twitter:description" content="Paste a long URL, get a short one. A 301 and nothing else.">
+	<meta name="twitter:title" content="go301.link — moved permanently">
+	<meta name="twitter:description" content="Paste a long URL. Get a short one. A 301 and nothing else.">
 	<meta name="twitter:image" content="{{.BaseURL}}/static/og.png">
 	<script>
 		// Applied before paint so there is no light-mode flash on load.
@@ -35,37 +37,46 @@
 	</script>
 </head>
 <body>
-	<button class="theme-toggle" type="button" id="theme-toggle" aria-label="Toggle colour theme">
-		<span class="theme-icons" aria-hidden="true">
-			<svg class="icon icon-sun" viewBox="0 0 24 24">
-				<circle cx="12" cy="12" r="4"/>
-				<path d="M12 2v2.5M12 19.5V22M4.93 4.93 6.7 6.7M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07 6.7 17.3M17.3 6.7l1.77-1.77"/>
-			</svg>
-			<svg class="icon icon-moon" viewBox="0 0 24 24">
-				<path d="M20.2 14.8A8.2 8.2 0 0 1 9.2 3.8 8.7 8.7 0 1 0 20.2 14.8Z"/>
-			</svg>
-		</span>
-	</button>
+	<a class="skip-link" href="#main">Skip to the form</a>
+
+	<header class="site-header">
+		<nav class="nav" aria-label="Primary">
+			<a class="brand" href="/">
+				<span class="brand-code" aria-hidden="true">301</span>
+				<span>go301.link</span>
+			</a>
+			<p class="nav-note">Permanent redirects, nothing else</p>
+			<button class="theme-toggle" type="button" id="theme-toggle" aria-label="Toggle colour theme">
+				<span class="theme-icons" aria-hidden="true">
+					<svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24">
+						<circle cx="12" cy="12" r="4"/>
+						<path d="M12 2v2.5M12 19.5V22M4.93 4.93 6.7 6.7M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07 6.7 17.3M17.3 6.7l1.77-1.77"/>
+					</svg>
+					<svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24">
+						<path d="M20.2 14.8A8.2 8.2 0 0 1 9.2 3.8 8.7 8.7 0 1 0 20.2 14.8Z"/>
+					</svg>
+				</span>
+			</button>
+		</nav>
+	</header>
 
 	<div class="split">
-		<section class="pane-ident">
-			<div class="mark">
-				<span class="mark-code" aria-hidden="true">301</span>
-				<a class="mark-host" href="/">go301.link</a>
+		<section class="pane-ident" aria-labelledby="ident-title">
+			<div>
+				<p class="eyebrow">Status 301</p>
+				<h1 id="ident-title">Moved <span class="rule-word">permanently</span>.</h1>
 			</div>
 
-			<h1>Moved <span class="rule-word">permanently</span>.</h1>
+			<p class="ident-sub">One long link in. One short link out. No middle page, no waiting, no second guess.</p>
 
 			<ol class="spec">
-				<li><b>01</b> No accounts, no cookies</li>
-				<li><b>02</b> No interstitial, straight through</li>
-				<li><b>03</b> Go and Postgres</li>
+				<li><b>01</b> No accounts. No cookies.</li>
+				<li><b>02</b> No interstitial. Straight through.</li>
+				<li><b>03</b> Go and Postgres. That's the stack.</li>
 			</ol>
 		</section>
 
-		<main class="pane-work">
-			<p class="work-label">New link</p>
-
+		<main class="pane-work" id="main">
 			<form class="shorten" id="shorten">
 				<label class="field-label" for="target">Destination URL</label>
 				<div class="field-stack">
@@ -82,9 +93,22 @@
 
 			<div id="result" aria-live="polite"></div>
 
-			<p class="colophon">Powered by <a href="https://denisantonov.com" target="_blank" rel="noopener">denisantonov.com</a></p>
+			<section class="api" aria-labelledby="api-title">
+				<h2 class="api-title" id="api-title">Or skip the form</h2>
+				<p class="api-note">One endpoint. JSON in, JSON out.</p>
+				<pre class="api-code"><code>curl -X POST {{.BaseURL}}/api/links \
+  -H 'Content-Type: application/json' \
+  -d '{"target":"denisantonov.com"}'</code></pre>
+			</section>
 		</main>
 	</div>
+
+	<footer class="footer">
+		<p>
+			<span>go301.link</span>
+			<span>Built by <a href="https://denisantonov.com" target="_blank" rel="noopener">denisantonov.com</a></span>
+		</p>
+	</footer>
 
 	<script src="/static/app.js" defer></script>
 	<script>

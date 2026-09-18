@@ -1,32 +1,45 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <rect width="1200" height="630" fill="#fbf7ff"/>
 
-  <!-- left block, as on the site -->
-  <rect x="0" y="0" width="430" height="630" fill="#9b6bd3"/>
-  <rect x="428" y="0" width="4" height="630" fill="#1c1725"/>
+  <!-- 64px grid, as on the page -->
+  <g stroke="#1c1725" stroke-opacity="0.1" stroke-width="3">
+    <path d="M64 0V630M128 0V630M192 0V630M256 0V630M320 0V630M384 0V630M448 0V630M512 0V630M576 0V630M640 0V630M704 0V630M768 0V630M832 0V630M896 0V630M960 0V630M1024 0V630M1088 0V630M1152 0V630"/>
+    <path d="M0 64H1200M0 128H1200M0 192H1200M0 256H1200M0 320H1200M0 384H1200M0 448H1200M0 512H1200M0 576H1200"/>
+  </g>
 
-  <!-- outlined 301 mark -->
-  <text x="74" y="352"
-        font-family="Cantarell Extra Bold, Liberation Sans, sans-serif"
-        font-size="168" font-weight="800" letter-spacing="-8"
-        fill="none" stroke="#ffffff" stroke-width="4">301</text>
-  <text x="76" y="404"
-        font-family="Liberation Mono, monospace"
-        font-size="21" font-weight="700" letter-spacing="7"
-        fill="#ffffff">GO301.LINK</text>
+  <!-- header strip -->
+  <rect x="0" y="0" width="1200" height="96" fill="#ffffff"/>
+  <rect x="0" y="93" width="1200" height="6" fill="#1c1725"/>
+  <rect x="58" y="30" width="86" height="42" fill="#5b347f" stroke="#1c1725" stroke-width="6"/>
+  <text x="101" y="61" text-anchor="middle"
+        font-family="Geist, Liberation Sans, sans-serif"
+        font-size="26" font-weight="900" letter-spacing="0" fill="#ffffff">301</text>
+  <text x="166" y="62"
+        font-family="Geist, Liberation Sans, sans-serif"
+        font-size="30" font-weight="900" letter-spacing="-0.6" fill="#1c1725">GO301.LINK</text>
 
-  <!-- right: the statement -->
-  <text x="502" y="286"
-        font-family="Cantarell Extra Bold, Liberation Sans, sans-serif"
-        font-size="76" font-weight="800" letter-spacing="-2"
-        fill="#1c1725">MOVED</text>
-  <text x="502" y="368"
-        font-family="Cantarell Extra Bold, Liberation Sans, sans-serif"
-        font-size="76" font-weight="800" letter-spacing="-2"
-        fill="#1c1725">PERMANENTLY.</text>
-  <rect x="502" y="382" width="578" height="6" fill="#9b6bd3"/>
+  <!-- eyebrow -->
+  <rect x="72" y="184" width="200" height="46" fill="#1c1725"/>
+  <rect x="64" y="176" width="200" height="46" fill="#eed6a8" stroke="#1c1725" stroke-width="6"/>
+  <text x="84" y="208"
+        font-family="Geist Mono, Liberation Mono, monospace"
+        font-size="20" font-weight="700" letter-spacing="3.5" fill="#1c1725">STATUS 301</text>
 
+  <!-- the statement -->
+  <text x="62" y="352"
+        font-family="Geist, Liberation Sans, sans-serif"
+        font-size="122" font-weight="900" letter-spacing="-5" fill="#1c1725">MOVED</text>
+  <text x="62" y="472"
+        font-family="Geist, Liberation Sans, sans-serif"
+        font-size="122" font-weight="900" letter-spacing="-5" fill="#1c1725">PERMANENTLY.</text>
+  <rect x="62" y="486" width="890" height="12" fill="#9b6bd3"/>
+
+  <!-- the claim, boxed mono -->
+  <rect x="62" y="546" width="8" height="40" fill="#1c1725"/>
+  <text x="88" y="574"
+        font-family="Geist Mono, Liberation Mono, monospace"
+        font-size="20" font-weight="700" letter-spacing="2.6" fill="#1c1725">ONE LONG LINK IN. ONE SHORT LINK OUT.</text>
 
   <!-- frame -->
-  <rect x="2" y="2" width="1196" height="626" fill="none" stroke="#1c1725" stroke-width="4"/>
+  <rect x="3" y="3" width="1194" height="624" fill="none" stroke="#1c1725" stroke-width="6"/>
 </svg>
